@@ -98,6 +98,18 @@ void UserApp1Initialize(void)
     /* The task isn't properly initialized, so shut it down and don't run */
     UserApp1_StateMachine = UserApp1SM_Error;
   }
+  
+  /* Turn on an LED using the ON function */
+  LedOn(BLUE0);
+
+  /* Turn on an LED using the TOGGLE function */
+  LedToggle(GREEN1);
+
+   /* Set an LED to blink at 2Hz */
+  LedBlink(RED2, LED_2HZ);
+
+  /* Set an LED to the dimmest state we have (5% duty cycle) */
+  LedPWM(BLUE3, LED_PWM_5);
 
 } /* end UserApp1Initialize() */
 
