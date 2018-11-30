@@ -118,7 +118,7 @@ void HardFault_Handler(void)
   LedOff(RED2);
   LedOff(RED3);
   
-  LedOn(RED0);
+  LedOff(RED0); //***CHANGED THIS FROM ON TO OFF
 #endif /* MPGL2_R01 */
 #endif /* MPGL2 */
 
