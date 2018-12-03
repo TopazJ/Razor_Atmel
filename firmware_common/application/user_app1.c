@@ -65,17 +65,6 @@ static u32 UserApp1_u32Timeout;                      /* Timeout counter used acr
 
 static PixelBlockType UserApp1_sEngenuicsImage;
 
-static LedNumberType aeCurrentLed[]  = {GREEN0, RED0, BLUE0};
-//static LedNumberType aeCurrentLed1[] = {GREEN1, RED1, BLUE1};
-//static LedNumberType aeCurrentLed2[] = {GREEN2, RED2, BLUE2};
-//static LedNumberType aeCurrentLed3[] = {GREEN3, RED3, BLUE3};
-
-static u8 abLedRateIncreasing [6][3]   = {{1, 4, 0}, {4, 2, 0}, {4, 0, 1}, {2, 0, 4}, {0, 1, 4}, {0, 4, 2}};
-static u8 LedCurrentLevel [3] = {0,20,0};
-
-static u8 u8CurrentLedIndex  = 0;
-static u8 u8StageCounter = 0;
-static u16 u16Counter = COLOR_CYCLE_TIME;
 
 
 /**********************************************************************************************************************
@@ -127,24 +116,6 @@ void UserApp1Initialize(void)
     UserApp1_StateMachine = UserApp1SM_Error;
   }
   
-  LedPWM(RED0,   LED_PWM_100);
-  LedPWM(GREEN0, LED_PWM_0);
-  LedPWM(BLUE0,  LED_PWM_0);
-
-  LedPWM(RED1,   LED_PWM_100);
-  LedPWM(GREEN1, LED_PWM_0);
-  LedPWM(BLUE1,  LED_PWM_0);
-
-  LedPWM(RED2,   LED_PWM_100);
-  LedPWM(GREEN2, LED_PWM_0);
-  LedPWM(BLUE2,  LED_PWM_0);
-
-  LedPWM(RED3,   LED_PWM_100);
-  LedPWM(GREEN3, LED_PWM_0);
-  LedPWM(BLUE3,  LED_PWM_0);
-
-  
-  
 } /* end UserApp1Initialize() */
 
   
@@ -188,85 +159,6 @@ static void UserApp1SM_Idle1(void)
     UserApp1_u32Timeout = G_u32SystemTime1ms;
     UserApp1_StateMachine = UserApp1SM_Idle2;
   }
-  
-  u16Counter--;
-  /* Check for update color every COLOR_CYCLE_TIME ms */  
-  if(u16Counter == 0)
-  {
-      u16Counter = COLOR_CYCLE_TIME;
- 
-    if (abLedRateIncreasing[u8StageCounter][u8CurrentLedIndex] == 1)
-    {
-       LedCurrentLevel[u8CurrentLedIndex]++;
-       if (LedCurrentLevel[u8CurrentLedIndex] == 20)
-       {
-          u8CurrentLedIndex++;
-          if (u8CurrentLedIndex == 3)
-          {
-            u8CurrentLedIndex = 0;
-            u8StageCounter++;
-            if(u8StageCounter==6)
-            {
-                u8StageCounter=0;
-            }
-          }
-       }
-    }
-    else if (abLedRateIncreasing[u8StageCounter][u8CurrentLedIndex] == 2)
-    {
-        LedCurrentLevel[u8CurrentLedIndex]--;
-        if (LedCurrentLevel[u8CurrentLedIndex] == 0)
-        {
-          u8CurrentLedIndex++;
-          if (u8CurrentLedIndex == 3)
-          {
-            u8CurrentLedIndex = 0;
-            u8StageCounter++;
-            if(u8StageCounter==6)
-            {
-                u8StageCounter=0;
-            }
-          }
-        }
-    }
-    else if (abLedRateIncreasing[u8StageCounter][u8CurrentLedIndex] == 0)
-    {  
-      LedCurrentLevel[u8CurrentLedIndex]=0;
-      u8CurrentLedIndex++;
-      if(u8CurrentLedIndex == 3)
-        {
-            u8CurrentLedIndex = 0;
-            u8StageCounter++;
-            if(u8StageCounter==6)
-            {
-                u8StageCounter=0;
-            }
-        }
-    }
-    else if (abLedRateIncreasing[u8StageCounter][u8CurrentLedIndex] == 4)
-    {
-      LedCurrentLevel[u8CurrentLedIndex] = 20; 
-      u8CurrentLedIndex++;
-      if (u8CurrentLedIndex == 3)
-      {
-            u8CurrentLedIndex = 0;
-            u8StageCounter++;
-            if(u8StageCounter==6)
-            {
-                u8StageCounter=0;
-            }
-       }
-     }
-    
-    for (int i=0; i<3 i++){
-      LedPWM( (LedNumberType)aeCurrentLed[i], (LedRateType)LedCurrentLevel[i]);
-    }
-  }
-  
-
-
-  
-  
   
 } /* end UserApp1SM_Idle1() */
     
