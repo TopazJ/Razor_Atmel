@@ -65,10 +65,6 @@ static u32 UserApp1_u32Timeout;                      /* Timeout counter used acr
 
 static PixelBlockType UserApp1_sEngenuicsImage;
 
-static u32 u32IsCounter = 0;
-static u32 u32WasCounter = 0;
-static bool bYellowBlink = FALSE;
-
 /**********************************************************************************************************************
 Function Definitions
 **********************************************************************************************************************/
@@ -134,6 +130,8 @@ void UserApp1Initialize(void)
   LedOff(BLUE3);
   LedOff(GREEN3);
   
+  PWMAudioSetFrequency(BUZZER1, 500);
+  
 } /* end UserApp1Initialize() */
 
   
@@ -177,45 +175,26 @@ static void UserApp1SM_Idle1(void)
     UserApp1_u32Timeout = G_u32SystemTime1ms;
     UserApp1_StateMachine = UserApp1SM_Idle2;
   }
-  
-  if (IsButtonPressed(BUTTON0))
+ 
+  if(WasButtonPressed(BUTTON0))
   {
-    u32IsCounter++;
-    LedOn(BLUE0);
+    ButtonAcknowledge(BUTTON0);
+    PWMAudioSetFrequency(BUZZER1, 262);
+  }
+  if(IsButtonPressed(BUTTON0)||IsButtonPressed(BUTTON1))
+  {
+    PWMAudioOn(BUZZER1);
   }
   else
   {
-    /* The button is not pressed, so make sure the LED is off */
-    LedOff(BLUE0);
+    PWMAudioOff(BUZZER1);
   }
-
-  if (WasButtonPressed(BUTTON1))
+  if(WasButtonPressed(BUTTON1))
   {
-    u32WasCounter++;
     ButtonAcknowledge(BUTTON1);
-    if(bYellowBlink)
-    {
-      bYellowBlink = FALSE;
-      LedOff(GREEN3);
-    }
-    else
-    {
-     /* start blinking the LED at the current rate */
-      bYellowBlink = TRUE;
-      LedBlink(GREEN3, LED_1HZ);
-    }
+    PWMAudioSetFrequency(BUZZER1, 294);
   }
-  
-  if( IsButtonHeld(BUTTON1, 2000) )
-  {
-    LedOn(RED2);
-    LedOn(GREEN2);
-  }
-  else
-  {
-    LedOff(RED2);
-    LedOff(GREEN2);
-  }
+    
   
 } /* end UserApp1SM_Idle1() */
     
