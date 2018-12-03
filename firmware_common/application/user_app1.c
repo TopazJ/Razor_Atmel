@@ -65,7 +65,9 @@ static u32 UserApp1_u32Timeout;                      /* Timeout counter used acr
 
 static PixelBlockType UserApp1_sEngenuicsImage;
 
-
+static u32 u32IsCounter = 0;
+static u32 u32WasCounter = 0;
+static bool bYellowBlink = FALSE;
 
 /**********************************************************************************************************************
 Function Definitions
@@ -116,6 +118,22 @@ void UserApp1Initialize(void)
     UserApp1_StateMachine = UserApp1SM_Error;
   }
   
+  LedOff(RED0);
+  LedOff(BLUE0);
+  LedOff(GREEN0);
+
+  LedOff(RED1);
+  LedOff(BLUE1);
+  LedOff(GREEN1);
+
+  LedOff(RED2);
+  LedOff(BLUE2);
+  LedOff(GREEN2);
+
+  LedOff(RED3);
+  LedOff(BLUE3);
+  LedOff(GREEN3);
+  
 } /* end UserApp1Initialize() */
 
   
@@ -158,6 +176,45 @@ static void UserApp1SM_Idle1(void)
     LcdLoadBitmap(&aau8FullScreen2[0][0], &UserApp1_sEngenuicsImage);
     UserApp1_u32Timeout = G_u32SystemTime1ms;
     UserApp1_StateMachine = UserApp1SM_Idle2;
+  }
+  
+  if (IsButtonPressed(BUTTON0))
+  {
+    u32IsCounter++;
+    LedOn(BLUE0);
+  }
+  else
+  {
+    /* The button is not pressed, so make sure the LED is off */
+    LedOff(BLUE0);
+  }
+
+  if (WasButtonPressed(BUTTON1))
+  {
+    u32WasCounter++;
+    ButtonAcknowledge(BUTTON1);
+    if(bYellowBlink)
+    {
+      bYellowBlink = FALSE;
+      LedOff(GREEN3);
+    }
+    else
+    {
+     /* start blinking the LED at the current rate */
+      bYellowBlink = TRUE;
+      LedBlink(GREEN3, LED_1HZ);
+    }
+  }
+  
+  if( IsButtonHeld(BUTTON1, 2000) )
+  {
+    LedOn(RED2);
+    LedOn(GREEN2);
+  }
+  else
+  {
+    LedOff(RED2);
+    LedOff(GREEN2);
   }
   
 } /* end UserApp1SM_Idle1() */
