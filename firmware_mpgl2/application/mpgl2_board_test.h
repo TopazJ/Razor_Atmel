@@ -34,8 +34,8 @@ Constants / Definitions
 
 
 /* BoardTest ANT radio settings */
-#define	ANT_SERIAL_LO_BOARDTEST			          (u8)0x34
-#define ANT_SERIAL_HI_BOARDTEST			          (u8)0x12
+#define	ANT_SERIAL_LO_BOARDTEST			          (u8)0x3a
+#define ANT_SERIAL_HI_BOARDTEST			          (u8)0x13
 #define	ANT_DEVICE_TYPE_BOARDTEST					    DEVICE_TYPE_BOARDTEST
 #define	ANT_TRANSMISSION_TYPE_BOARDTEST		    (u8)0x01
 
