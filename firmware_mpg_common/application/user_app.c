@@ -176,8 +176,11 @@ OFF  WHITE
 static void UserAppSM_Idle(void)
 {
   /* Sound - related variable definitions */
-  static u16 au16NotesRight[]    = {F5, F5, F5, F5, F5, E5, D5, E5, F5, G5, A5, A5, A5, A5, A5, G5, F5, G5, A5, A5S, C6, F5, F5, D6, C6, A5S, A5, G5, F5, NO, NO};
-  static u16 au16DurationRight[] = {QN, QN, HN, EN, EN, EN, EN, EN, EN, QN, QN, QN, HN, EN, EN, EN, EN, EN, EN, QN,  HN, HN, EN, EN, EN, EN, QN,  QN, HN, HN, FN};
+  static u16 au16NotesRight[]    = {E5, B4, C5, D5, E5, D5, C5, B4, A4, A4, C5, E5, F5, E5, D5, C5, B4, B4, C5, D5, E5, C5, A4, A4, NO, D5, F5, A5, G5, F5, E5, E5, 
+  NO, C5, E5, F5, E5, D5, C5, B4, B4, B4, C5, D5, E5, C5, C5, A4, A4, NO, NO, E5, B4, C5, D5, E5, D5, C5, B4, A4, A4, C5, E5, F5, E5, D5, C5, B4, B4, C5, D5, E5, C5, 
+  A4, A4, NO, D5, F5, A5, G5, F5, E5, E5, NO, C5, E5, F5, E5, D5, C5, B4, B4, B4, C5, D5, E5, C5, C5, A4, A4, NO, NO, E5, C5, D5, B4, C5, A4, G4S, B4, NO, NO, E5, C5, 
+  D5, B4, C5, E5, A5, G5S, NO};
+  static u16 au16DurationRight[] = {QN, EN, EN, EN, SN, SN, EN, EN, QN, EN, EN, EN, SN, SN, EN, EN, QN, EN, EN, QN, QN, QN, QN, QN, QN, QN, EN, QN, EN, EN, EN, EN}; //LINE ONE
   static u16 au16NoteTypeRight[] = {RT, RT, HT, RT, RT, RT, RT, RT, RT, RT, RT, RT, HT, RT, RT, RT, RT, RT, RT, RT,  RT, HT, RT, RT, RT, RT, RT,  RT, RT, HT, HT};
   static u8 u8IndexRight = 0;
   static u32 u32RightTimer = 0;
@@ -185,14 +188,6 @@ static void UserAppSM_Idle(void)
   static u16 u16NoteSilentDurationRight = 0;
   static bool bNoteActiveNextRight = TRUE;
   
-  static u16 au16NotesLeft[]    = {F4, F4, A4, A4, D4, D4, F4, F4, A3S, A3S, D4, D4, C4, C4, E4, E4};
-  static u16 au16DurationLeft[] = {EN, EN, EN, EN, EN, EN, EN, EN, EN,  EN,  EN, EN, EN, EN, EN, EN};
-  static u16 au16NoteTypeLeft[] = {RT, RT, RT, RT, RT, RT, RT, RT, RT,  RT,  RT, RT, RT, RT, RT, RT};
-  static u8 u8IndexLeft = 0;
-  static u32 u32LeftTimer = 0;
-  static u16 u16CurrentDurationLeft = 0;
-  static u16 u16NoteSilentDurationLeft = 0;
-  static bool bNoteActiveNextLeft = TRUE;
   
   u8 u8CurrentIndex;
   static u32 u32CycleCounter = 0;
